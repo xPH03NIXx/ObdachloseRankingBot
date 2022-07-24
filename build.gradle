@@ -1,0 +1,42 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.7.10'
+    id 'groovy'
+    id 'java'
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+group 'ObdachloseRankingBot'
+version 'Alpha2'
+
+repositories {
+    mavenCentral()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation 'org.codehaus.groovy:groovy-all:3.0.5'
+    implementation "org.mapdb:mapdb:3.0.8"
+    implementation "net.dv8tion:JDA:5.0.0-alpha.16"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task customFatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'Main'
+    }
+    baseName = 'all-in-one-jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
