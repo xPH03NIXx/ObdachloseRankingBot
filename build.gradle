@@ -2,6 +2,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.7.10'
     id 'groovy'
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 compileJava.options.encoding = 'UTF-8'
@@ -31,12 +32,12 @@ test {
     useJUnitPlatform()
 }
 
-task customFatJar(type: Jar) {
-    manifest {
-        attributes 'Main-Class': 'Main'
+task stage(dependsOn: ['build','shadowJar','clean','test'])
+build.mustRunAfter clean
+build.mustRunAfter test
+
+jar {
+    manifest{
+        attributes 'Class-Path': '/libs/ObdachloseRankingBot-Alpha2-all.jar', 'Main-Class': 'Main'
     }
-    baseName = 'all-in-one-jar'
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
 }

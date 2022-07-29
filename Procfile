@@ -1,0 +1,1 @@
+worker: java -jar build/libs/ObdachloseRankingBot-Alpha2-all.jar
