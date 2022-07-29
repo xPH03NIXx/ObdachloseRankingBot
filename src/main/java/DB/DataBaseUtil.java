@@ -78,4 +78,15 @@ public class DataBaseUtil {
     private static Map<String, Integer> severListFromConnection(ConcurrentMap<String, Integer> hashMap) {
         return new HashMap<>(hashMap);
     }
+
+    public static void resetList(List<Member> members){
+        try (DB db = DBMaker.fileDB("file.db").make()) {
+            ConcurrentMap<String, Integer> map = db.hashMap("map", Serializer.STRING, Serializer.INTEGER).createOrOpen();
+            map.clear();
+            for (Member member : members) {
+                map.put(getUserIdentity(member), 0);
+            }
+            db.commit();
+        }
+    }
 }

@@ -16,6 +16,7 @@ public class CommandListener extends ListenerAdapter {
         commands.put("addpoints", new AddPointsCommand());
         commands.put("removepoints", new RemovePointsCommand());
         commands.put("broadcastranking", new BroadcastRankingCommand());
+        commands.put("resetranking", new ResetRankingCommand());
     }
 
     @Override

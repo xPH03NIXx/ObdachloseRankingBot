@@ -49,6 +49,8 @@ public class Main {
                     .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR))
                     .addOptions(new OptionData(OptionType.INTEGER, "amount", "amount of users to display - if left empty, all users will be displayed")
                             .setMinValue(1))).queue();
+            guild.upsertCommand(new CommandDataImpl("resetranking", "resets the points for every user")
+                            .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.ADMINISTRATOR))).queue();
 
 
             DataBaseUtil.initialize(guild.getMembers());
